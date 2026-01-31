@@ -30,6 +30,11 @@ dotfiles/
 │   │   └── versions.zsh      # Linux 軟體版本
 │   ├── local.zsh             # 本機特定設定（不追蹤）
 │   └── local.zsh.example     # 範例檔案
+├── git/
+│   ├── gitconfig             # 主 .gitconfig（引入其他配置）
+│   ├── config                # 共用 Git 配置
+│   ├── config.local          # 本機特定（user 資訊，不追蹤）
+│   └── config.local.example  # 範例檔案
 ├── install.sh                # 安裝腳本
 ├── .gitignore
 └── README.md
@@ -50,6 +55,7 @@ chmod +x install.sh
 
 # 3. 編輯本機特定設定
 vim ~/dotfiles/zsh/local.zsh
+vim ~/dotfiles/git/config.local  # 填入 user.name 和 user.email
 
 # 4. 重新載入 shell
 source ~/.zshrc
@@ -65,6 +71,8 @@ source ~/.zshrc
 
 ## 本機特定設定
 
+### Zsh 設定
+
 將不想提交到 git 的設定放在 `zsh/local.zsh`：
 
 ```bash
@@ -79,6 +87,34 @@ export JAVA_HOME="/custom/java/path"
 
 # API Keys（絕對不要提交）
 export OPENAI_API_KEY="sk-..."
+```
+
+### Git 設定
+
+個人資訊放在 `git/config.local`（不會被追蹤）：
+
+```ini
+[user]
+	name = Your Name
+	email = your.email@example.com
+
+[credential]
+	helper = osxkeychain  # macOS
+	# helper = cache      # Linux
+```
+
+如果不同專案需要不同的 email（例如工作 vs 個人）：
+
+```ini
+# 在 git/config.local 中
+[includeIf "gitdir:~/work/"]
+	path = ~/.gitconfig-work
+```
+
+然後創建 `~/.gitconfig-work`：
+```ini
+[user]
+	email = work.email@company.com
 ```
 
 ## 軟體版本處理
@@ -100,21 +136,42 @@ export OPENAI_API_KEY="sk-..."
 
 如果你的機器使用不同版本，在 `local.zsh` 中覆蓋即可。
 
-## 包含的別名
+## 包含的別名與配置
 
-### Docker
+### Shell 別名（Zsh）
+
+**Docker**
 - `d`, `dc`, `dps`, `di`, `dex`, `dlog`
 - `dcup`, `dcdown`, `dclog`, `dcrestart`
 
-### Git
+**Git**
 - 基本：`g`, `gs`, `ga`, `gc`, `gp`, `gpl`
 - 分支：`gb`, `gba`, `gco`, `gsw`, `gswm`
 - 合併：`gm`, `gma`, `gmom`
 
-### Maven
+**Maven**
 - `mvnc`, `mvni`, `mvnci`, `mvncs`, `mvnt`, `mvnboot`
 
 完整列表請見 `zsh/common/aliases.zsh`。
+
+### Git 別名（.gitconfig）
+
+**常用縮寫**
+- `git st` = status
+- `git co` = checkout
+- `git sw` = switch
+- `git ci` = commit
+- `git br` = branch
+
+**進階功能**
+- `git lg` - 美化的 log（圖形化）
+- `git last` - 顯示最後一次提交
+- `git amend` - 修改最後一次提交
+- `git unstage` - 取消 staging
+- `git cleanup` - 清理已合併的分支
+- `git ac "message"` - 快速 add all + commit
+
+完整列表請見 `git/config`。
 
 ## 更新
 
@@ -126,16 +183,22 @@ source ~/.zshrc
 
 ## 自訂
 
+**Zsh 配置**
 - **新增別名**: 編輯 `zsh/common/aliases.zsh`
 - **調整設定**: 編輯 `zsh/common/settings.zsh`
 - **平台特定**: 編輯 `zsh/macos/` 或 `zsh/linux/`
 - **本機專用**: 編輯 `zsh/local.zsh`
 
+**Git 配置**
+- **共用設定**: 編輯 `git/config`（會同步到所有機器）
+- **個人資訊**: 編輯 `git/config.local`（不會被追蹤）
+
 ## 備份
 
-安裝腳本會自動備份現有的 `.zshrc`：
+安裝腳本會自動備份現有的配置檔案：
 ```
 ~/.zshrc.backup.YYYYMMDD_HHMMSS
+~/.gitconfig.backup.YYYYMMDD_HHMMSS
 ```
 
 ## License

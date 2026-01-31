@@ -77,19 +77,29 @@ main() {
 
   # 創建 local.zsh（如果不存在）
   if [ ! -f "$HOME/dotfiles/zsh/local.zsh" ]; then
-    echo_info "創建 local.zsh 範例檔案..."
+    echo_info "創建 zsh/local.zsh 範例檔案..."
     cp "$HOME/dotfiles/zsh/local.zsh.example" "$HOME/dotfiles/zsh/local.zsh"
     echo_warn "請編輯 ~/dotfiles/zsh/local.zsh 加入本機特定設定"
   fi
 
-  # 可以在這裡加入其他配置檔案的 symlink
-  # 例如：git, vim, tmux 等
+  # Git 配置
+  echo_info "設定 Git..."
+  create_symlink "$HOME/dotfiles/git/gitconfig" "$HOME/.gitconfig"
+
+  # 創建 git/config.local（如果不存在）
+  if [ ! -f "$HOME/dotfiles/git/config.local" ]; then
+    echo_info "創建 git/config.local 範例檔案..."
+    cp "$HOME/dotfiles/git/config.local.example" "$HOME/dotfiles/git/config.local"
+    echo_warn "請編輯 ~/dotfiles/git/config.local 填入你的 user.name 和 user.email"
+  fi
 
   echo_info "✓ 安裝完成！"
   echo_info "請執行以下命令重新載入 shell："
   echo_info "  source ~/.zshrc"
   echo ""
-  echo_warn "記得編輯 ~/dotfiles/zsh/local.zsh 加入本機特定設定"
+  echo_warn "記得編輯以下檔案："
+  echo_warn "  - ~/dotfiles/zsh/local.zsh (Zsh 本機設定)"
+  echo_warn "  - ~/dotfiles/git/config.local (Git user 資訊)"
 }
 
 main "$@"

@@ -1,0 +1,14 @@
+# ========================================
+# 主 .gitconfig 檔案
+# ========================================
+# 這個檔案會被 symlink 到 ~/.gitconfig
+# 它引入其他配置檔案
+
+# 引入共用配置
+[include]
+	path = ~/dotfiles/git/config
+
+# 引入本機特定配置（包含 user 資訊）
+# 這個檔案不會被 git 追蹤
+[include]
+	path = ~/dotfiles/git/config.local

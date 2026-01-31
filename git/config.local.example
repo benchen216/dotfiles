@@ -1,0 +1,32 @@
+# ========================================
+# Git 本機配置範例
+# ========================================
+# 將此檔案複製為 config.local 並填入你的資訊
+# config.local 不會被 git 追蹤
+#
+# 使用場景：
+# - 個人資訊（name, email）
+# - 不同機器使用不同的 email（工作 vs 個人）
+# - GPG 簽名設定
+# - 特定工具的設定
+# ========================================
+
+[user]
+	name = 你的名字
+	email = your.email@example.com
+
+	# 如果使用 GPG 簽名
+	# signingkey = YOUR_GPG_KEY_ID
+
+# 如果需要 GPG 簽名
+# [commit]
+# 	gpgsign = true
+
+# 如果使用不同的 credential helper
+# [credential]
+# 	helper = osxkeychain  # macOS
+# 	# helper = cache      # Linux
+
+# 如果有特定專案需要不同的 email
+# [includeIf "gitdir:~/work/"]
+# 	path = ~/.gitconfig-work

@@ -1,0 +1,110 @@
+# ========================================
+# Git 共用配置
+# 跨平台通用設定
+# ========================================
+
+[core]
+	# 換行符號處理（跨平台）
+	autocrlf = input
+
+	# 預設編輯器（如果有設定的話）
+	# editor = vim
+
+	# 忽略檔案權限變更
+	filemode = false
+
+	# 處理長路徑（Windows 需要）
+	longpaths = true
+
+[init]
+	# 預設分支名稱
+	defaultBranch = main
+
+[pull]
+	# 預設 pull 行為（rebase 比較乾淨）
+	rebase = false
+
+[push]
+	# 只推送當前分支
+	default = current
+
+	# 自動設定 upstream
+	autoSetupRemote = true
+
+[fetch]
+	# 自動清理已刪除的遠端分支
+	prune = true
+
+[merge]
+	# 衝突時顯示共同祖先
+	conflictstyle = diff3
+
+[diff]
+	# 更好的差異顯示
+	algorithm = histogram
+	colorMoved = default
+
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+
+[color]
+	ui = auto
+
+[color "branch"]
+	current = yellow reverse
+	local = yellow
+	remote = green
+
+[color "diff"]
+	meta = yellow bold
+	frag = magenta bold
+	old = red bold
+	new = green bold
+
+[color "status"]
+	added = green
+	changed = yellow
+	untracked = red
+
+# ========================================
+# Git 別名
+# ========================================
+
+[alias]
+	# 常用指令縮寫
+	st = status
+	co = checkout
+	br = branch
+	ci = commit
+	sw = switch
+
+	# 美化的 log
+	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+	lga = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --all
+
+	# 顯示最近的提交
+	last = log -1 HEAD --stat
+
+	# 修改最後一次提交
+	amend = commit --amend --no-edit
+
+	# 取消 staging
+	unstage = reset HEAD --
+
+	# 捨棄工作區變更
+	discard = checkout --
+
+	# 顯示所有別名
+	aliases = config --get-regexp ^alias\\.
+
+	# 清理已合併的分支
+	cleanup = "!git branch --merged | grep -v '\\*\\|main\\|master\\|dev' | xargs -n 1 git branch -d"
+
+	# 快速 commit
+	ac = !git add -A && git commit -m
+
+	# 顯示貢獻者統計
+	contributors = shortlog --summary --numbered

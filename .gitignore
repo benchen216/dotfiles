@@ -1,5 +1,6 @@
 # 本機特定設定（包含敏感資訊）
 zsh/local.zsh
+git/config.local
 
 # macOS
 .DS_Store
