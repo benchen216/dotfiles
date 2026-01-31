@@ -1,5 +1,8 @@
 # ========== Zsh 基本設定 ==========
 
+# 固定 zcompdump 檔案路徑（避免產生多個快取檔案）
+export ZSH_COMPDUMP="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump"
+
 # Remove older command from the history if a duplicate is to be added.
 setopt HIST_IGNORE_ALL_DUPS
 
