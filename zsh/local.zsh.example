@@ -1,0 +1,25 @@
+# ========================================
+# 本機特定設定範例
+# ========================================
+# 將此檔案複製為 local.zsh 並填入你的設定
+# local.zsh 不會被 git 追蹤
+#
+# 使用場景：
+# - 機器特定的路徑
+# - 公司專案相關變數
+# - API keys、tokens
+# - 不同機器的軟體版本差異
+# ========================================
+
+# 範例：專案特定變數
+# export RLM_PROJECT="wsa-dpo01-2022"
+
+# 範例：機器特定路徑
+# export CUSTOM_PATH="/path/to/something"
+
+# 範例：不同的軟體版本
+# export JAVA_HOME="/usr/lib/jvm/java-17-openjdk"
+
+# 範例：API Keys (絕對不要提交到 git)
+# export OPENAI_API_KEY="sk-..."
+# export AWS_ACCESS_KEY_ID="..."

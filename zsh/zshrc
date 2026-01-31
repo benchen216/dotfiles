@@ -1,0 +1,44 @@
+# ========================================
+# 主 .zshrc 配置檔案
+# 跨平台支援：macOS & Linux
+# ========================================
+
+# ========== Zim 框架初始化 ==========
+# 必須在最前面，提供基礎 Zsh 功能
+source ~/dotfiles/zsh/zim.zsh
+
+# ========== 提示符設定 ==========
+source ~/dotfiles/zsh/prompt.zsh
+
+# ========== 通用設定 ==========
+source ~/dotfiles/zsh/common/settings.zsh
+
+# ========== 平台特定設定 ==========
+case "$(uname -s)" in
+  Darwin)
+    # macOS
+    source ~/dotfiles/zsh/macos/env.zsh
+    source ~/dotfiles/zsh/macos/versions.zsh
+    ;;
+  Linux)
+    # Linux
+    source ~/dotfiles/zsh/linux/env.zsh
+    source ~/dotfiles/zsh/linux/versions.zsh
+    ;;
+  *)
+    echo "Unknown OS: $(uname -s)"
+    ;;
+esac
+
+# ========== 跨平台工具 ==========
+source ~/dotfiles/zsh/common/tools.zsh
+
+# ========== 別名 ==========
+source ~/dotfiles/zsh/common/aliases.zsh
+
+# ========== 本機特定設定 ==========
+# 這個檔案不會被 git 追蹤，用於機器特定的設定
+# 例如：公司專案變數、API keys、機器特定路徑等
+if [ -f ~/dotfiles/zsh/local.zsh ]; then
+  source ~/dotfiles/zsh/local.zsh
+fi
